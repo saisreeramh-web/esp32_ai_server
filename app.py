@@ -1,24 +1,12 @@
-from flask import Flask, request, jsonify
-import openai
+from flask import Flask
 import os
 
 app = Flask(__name__)
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
-
-@app.route("/chat", methods=["POST"])
-def chat():
-    data = request.get_json()
-    user_text = data.get("text", "")
-
-    response = openai.Completion.create(
-        engine="text-davinci-003",
-        prompt=user_text,
-        max_tokens=100
-    )
-
-    reply = response.choices[0].text.strip()
-    return jsonify({"reply": reply})
+@app.route("/")   # 👈 This handles the root URL
+def home():
+    return "Server is running ✅"
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
