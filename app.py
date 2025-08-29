@@ -1,18 +1,28 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request
+import speech_recognition as sr
+import openai
 
 app = Flask(__name__)
 
-@app.route("/")
-def home():
-    return "Server is running ✅"
-
 @app.route("/upload", methods=["POST"])
 def upload():
-    audio_data = request.data  # raw audio from ESP32
-    print(f"Received {len(audio_data)} bytes of audio")
+    # Save raw audio
+    with open("temp.wav", "wb") as f:
+        f.write(request.data)
 
-    # for now just send a dummy reply
-    return jsonify({"reply": "Hello from cloud!"})
+    recognizer = sr.Recognizer()
+    with sr.AudioFile("temp.wav") as source:
+        audio = recognizer.record(source)
+
+    try:
+        text = recognizer.recognize_google(audio)
+    except:
+        text = "Could not recognize speech"
+
+    # Generate AI reply
+    reply = f"I heard: {text}. I am ChatGPT!"
+
+    return reply
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
