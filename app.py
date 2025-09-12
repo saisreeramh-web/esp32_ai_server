@@ -2,11 +2,10 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# This defines the /upload route, independent of folder name
 @app.route('/upload', methods=['POST'])
 def upload():
     data = request.data
-    print("Received data length:", len(data))  # You’ll see this in logs
+    print("Received data length:", len(data))
     return jsonify({"response": "Hello from the server!"})
 
 if __name__ == "__main__":
