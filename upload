@@ -1,0 +1,15 @@
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+# Define the /upload route and allow POST requests
+@app.route('/upload', methods=['POST'])
+def upload():
+    data = request.data
+    print("Received data of length:", len(data))
+
+    # You can process the data here or send a response
+    return jsonify({"response": "Hello! I got your message!"})
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
