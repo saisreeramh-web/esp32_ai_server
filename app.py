@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-@app.route('/upload', methods=['POST'])
+@app.route('uploading', methods=['POST'])
 def upload():
     data = request.data
     print("Received data length:", len(data))
