@@ -2,15 +2,15 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-@app.route('/')
-def home():
-    return "ESP32 AI Server is running!"
-
 @app.route('/upload', methods=['POST'])
 def upload():
     data = request.data
     print("Received data length:", len(data))
     return jsonify({"response": "Hello! I got your audio."})
+
+@app.route('/')
+def home():
+    return ""
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)
