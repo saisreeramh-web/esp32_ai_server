@@ -2,6 +2,10 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
+@app.route('/')
+def home():
+    return "ESP32 AI Server is running!"
+
 @app.route('/upload', methods=['POST'])
 def upload():
     data = request.data
